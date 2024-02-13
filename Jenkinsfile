@@ -3,6 +3,7 @@ pipeline {
     stages{
         stage(' clean and compile '){
             steps{
+            echo "This is master branch"
             sh "mvn clean compile"
             }
         }
