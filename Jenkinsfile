@@ -3,9 +3,9 @@ pipeline {
     stages{
         stage(' clean and compile '){
             steps{
-            echo "hello world!"
-            echo "hello jenkins"
-            echo "Dontireddy Venkata Krishna Reddy"
+            echo "HELLO WORLD!"
+            echo "HELLO JENKINS"
+            echo "DONTIREDDY VENKATA KRISHNA REDDY"
             sh "mvn clean compile"
             }
         }
