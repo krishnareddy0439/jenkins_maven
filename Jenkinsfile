@@ -3,7 +3,6 @@ pipeline {
     stages{
         stage(' clean and compile '){
             steps{
-            echo "This is master branch"
             sh "mvn clean compile"
             }
         }
@@ -17,9 +16,21 @@ pipeline {
                 }
             }
         }
-        stage('package'){
+        stage('docker build'){
             steps{
-            sh "mvn package "
+            sh "docker build -t venkatakrishnareddy/docker-myapp:${BUILD_NUMBER} . "
+            }
+        }
+        stage('docker login'){
+            steps{
+            withCredentials([string(credentialsId: 'DockerId', variable: 'DOCKER_PWD')]) {
+            sh "docker login -u dvkr0439@gmail.com -p ${DOCKER_PWD}"
+            }
+            }
+        }
+        stage('docker push'){
+            steps{
+            sh " docker push venkatakrishnareddy/docker-myapp:${BUILD_NUMBER}"
             }
         }
         stage('Archiving'){
