@@ -16,21 +16,13 @@ pipeline {
                 }
             }
         }
-        stage('docker build'){
+        stage('docker build and push'){
             steps{
-            sh "docker build -t venkatakrishnareddy/docker-myapp:${BUILD_NUMBER} . "
-            }
-        }
-        stage('docker login'){
-            steps{
-            withCredentials([string(credentialsId: 'DockerId', variable: 'DOCKER_PWD')]) {
-            sh "docker login -u dvkr0439@gmail.com -p ${DOCKER_PWD}"
-            }
-            }
-        }
-        stage('docker push'){
-            steps{
-            sh " docker push venkatakrishnareddy/docker-myapp:${BUILD_NUMBER}"
+                script{
+                    withDockerRegistry(credentialsId: '2c14b8c6-e7ac-4fe2-8b69-1c2ac13305f3') {
+                        sh "docker build -t venkatakrishnareddy/docker-myapp:${BUILD_NUMBER} . "
+                        sh "docker push venkatakrishnareddy/docker-myapp:${BUILD_NUMBER}"
+                       }
             }
         }
         stage('Archiving'){
