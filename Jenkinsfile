@@ -23,7 +23,8 @@ pipeline {
                         sh "docker build -t venkatakrishnareddy/docker-myapp:${BUILD_NUMBER} . "
                         sh "docker push venkatakrishnareddy/docker-myapp:${BUILD_NUMBER}"
                        }
-            }
+                       }
+        }
         }
         stage('Archiving'){
             steps{
